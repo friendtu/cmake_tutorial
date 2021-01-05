@@ -6,15 +6,16 @@
 
 // a hack square root calculation using simple operations
 
-#if define HAVE_LOG && define HAVE_EXP
+#if defined HAVE_LOG && defined HAVE_EXP
   double mysqrt(double x)
   {
       double result = exp(log(x) * 0.5);
       std::cout << "Computing sqrt of " << x << " to be " << result
             << " using log and exp" << std::endl;
+      return result;
   }
 #else
-  /*
+  
   double mysqrt(double x)
   {
     if (x <= 0) {
@@ -33,7 +34,7 @@
       std::cout << "Computing sqrt of " << x << " to be " << result << std::endl;
     }
     return result;
-  }*/
+  }
 #endif
 
 

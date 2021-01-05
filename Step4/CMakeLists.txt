@@ -7,6 +7,21 @@ project(Tutorial VERSION 1.0)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+include(CheckSymbolExists)
+check_symbol_exists(log "math.h" HAVE_LOG)
+check_symbol_exists(exp "math.h" HAVE_EXP)
+if(NOT (HAVE_LOG AND HAVE_EXP))
+  #unset(HAVE_LOG CACHE)
+  #unset(HAVE_EXP CACHE)
+  set(CMAKE_REQUIRED_LIBRARIES "m")
+  check_symbol_exists(log "math.h" HAVE_LOG)
+  check_symbol_exists(exp "math.h" HAVE_EXP)
+  if(HAVE_LOG AND HAVE_EXP)
+    target_link_libraries(MathFunctions PRIVATE m)
+  endif()
+endif()
+
+
 # should we use our own math functions
 option(USE_MYMATH "Use tutorial provided math implementation" ON)
 
@@ -33,16 +48,3 @@ target_include_directories(Tutorial PUBLIC
 install(TARGETS Tutorial RUNTIME DESTINATION bin)
 install(FILES "${PROJECT_BINARY_DIR}/TutorialConfig.h" DESTINATION include)
 
-include(CheckSymbolExists)
-check_symbol_exists(log "math.h" HAVE_LOG)
-check_symbol_exists(exp "math.h" HAVE_EXP)
-if(NOT (HAVE_LOG AND HAVE_EXP))
-  unset(HAVE_LOG CACHE)
-  unset(HAVE_EXP CACHE)
-  set(CMAKE_REQUIRED_LIBRARIES "m")
-  check_symbol_exists(log "math.h" HAVE_LOG)
-  check_symbol_exists(exp "math.h" HAVE_EXP)
-  if(HAVE_LOG AND HAVE_EXP)
-    target_link_libraries(MathFunctions PRIVATE m)
-  endif()
-endif()
