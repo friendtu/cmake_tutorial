@@ -17,6 +17,7 @@ option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
 # to the source code
 configure_file(TutorialConfig.h.in TutorialConfig.h)
 
+add_subdirectory(MathFunctions)
 # add the executable
 add_executable(Tutorial tutorial.cxx)
 target_link_libraries(Tutorial PUBLIC MathFunctions) 
@@ -25,6 +26,7 @@ target_link_libraries(Tutorial PUBLIC MathFunctions)
 # so that we will find TutorialConfig.h
 target_include_directories(Tutorial PUBLIC
                            "${PROJECT_BINARY_DIR}"
+#                           "${PROJECT_SOURCE_DIR}/MathFunctions"
                            )
 
 # add the install targets
