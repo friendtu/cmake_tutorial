@@ -35,5 +35,10 @@ endif()
 target_compile_definitions(MathFunctions PRIVATE "EXPORING_MYMATH")
 
 # install rules
-install(TARGETS MathFunctions DESTINATION lib)
+set(installable_libs MathFunctions)
+#if(TARGET SqrtLibrary)
+if(USE_MYMATH)
+  list(APPEND installable_libs SqrtLibrary)
+endif()
+install(TARGETS ${installable_libs} DESTINATION lib)
 install(FILES MathFunctions.h DESTINATION include)
